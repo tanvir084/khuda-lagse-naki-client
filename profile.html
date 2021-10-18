@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+
+    <!-- link css -->
+    <link rel="stylesheet" href="css/signup.css" />
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- link font awesome icon -->
+    <script
+      src="https://kit.fontawesome.com/af4e5ff284.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      $(document).ready(function () {
+        $("#icon").click(function () {
+          $("ul").toggleClass("show");
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <label class="logo"
+          ><i class="fas fa-utensils"></i> Khuda Lagse Naki!</label
+        >
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="order2.html">Order</a></li>
+          <li><a href="search.html">Search</a></li>
+          <li><a href="cart.html">Cart</a></li>
+          <li>
+            <a href="signup.html"><i class="fas fa-sign-in-alt"></i> Sign Up</a>
+          </li>
+          <li>
+            <a href="login2.html"><i class="fas fa-user-plus"></i> Log In</a>
+          </li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+        <label id="icon">
+          <i class="fas fa-bars"></i>
+        </label>
+      </nav>
+    </header>
+
+    <section style="margin-left: 30px; margin-top: 10px">
+      <h4 style="text-decoration: underline; font-family: 'Open Sans', sans-serif">Account Details :</h4>
+      <div class="fw-bolder" id="account-deatils">
+        <p>Name: <span id="name"></span></p>
+        <p>Email: <span id="email"></span></p>
+        <p>Mobile No: <span id="mobile-no"></span></p>
+        <p>Address: <span id="address"></span></p>
+        <button class="btn btn-danger"onclick="logOut()">Log Out</button>
+        <button class="btn btn-success" onclick="changePassword()">Change Password</button>
+      </div>
+    </section>
+
+    <section style="margin-top: 15px">
+      <h4 style="margin-left: 30px; text-decoration: underline;font-family: 'Open Sans', sans-serif">
+        Purchasing History : Last Pending Order 
+      </h4>
+      <h5  style="margin-left: 30px; font-family: 'Open Sans', sans-serif">Order Id : <small id="last-order-id"></small></h5>
+      <h5  style="margin-left: 30px; font-family: 'Open Sans', sans-serif">Total Price : <small id="totalPriceOfLastOrder"></small></h5>
+      <table 
+        id="last-order"
+        class="table table-striped w-75 mx-auto text-center">
+        <thead>
+            <tr>
+              <th>Image</th>
+              <th>food</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+
+      </table>
+    </section>
+
+    <section>
+      <h4 style="margin-left: 30px; text-decoration: underline;font-family: 'Open Sans', sans-serif">
+        Purchasing History : pending
+      </h4>
+      <div>
+        <table
+          id="purchase-history-pending"
+          class="table table-striped w-75 mx-auto text-center"
+        >
+          <thead>
+            <tr>
+              <th>Order No</th>
+              <th>Date</th>
+              <th>Payment Status</th>
+              <th>Total Item Ordered</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h4 style="margin-left: 30px;text-decoration: underline; font-family: 'Open Sans', sans-serif">
+        Purchasing History : Successful
+      </h4>
+      <div>
+        <table
+          id="purchase-history-successful"
+          class="table table-striped w-75 mx-auto text-center"
+        >
+          <thead>
+            <tr>
+              <th>Order No</th>
+              <th>Date</th>
+              <th>Payment Status</th>
+              <th>Total Item Ordered</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+    
+
+    <script>
+      const logOut = () =>{
+
+        
+        function setCookie(cname,cvalue,exdays){
+        console.log('setcookie');
+          const d = new Date();
+          d.setTime(d.getTime() + (exdays*60*1000));
+          let expires = "expires=" + d.toGMTString();
+          console.log(expires);
+          document.cookie =  cvalue + ";" + expires + ";path=/";
+          console.log(document.cookie);
+
+          window.location.href = "login2.html";
+          //  document.cookie =  ' ' + ";" + expires + ";path=/";
+          // document.cookie =  cvalue + ";" + expires + ";path=/";
+        }
+
+
+        function getCookie(cname) {
+
+        let name = cname;
+        console.log(name);
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        console.log(ca);
+        console.log(ca.length);
+        if(ca.length == 1){
+          return true;
+        }
+      }
+     
+      function checkCookie(username) {
+        console.log('check cookie');
+        let userN = getCookie('');
+        if (userN == true) {
+          setCookie("userName", "hel", -10000);
+        }
+      }
+
+      checkCookie('');
+    }
+
+      //cookies
+      
+
+
+
+      const loadProfileData = async () => {
+        let cookies = document.cookie;
+        console.log(cookies);
+
+        const params = {
+          token: cookies,
+        };
+        console.log(params);
+        var queryString = Object.keys(params)
+          .map((key) => key + "=" + params[key])
+          .join("&");
+
+        let response = await fetch(
+          "https://calm-garden-13016.herokuapp.com/user_data",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }, // this line is important, if this content-type is not set it wont work
+            body: queryString,
+          }
+        );
+
+        let res = await response.json();
+        console.log(res);
+        let userName = res.token;
+
+        if (window.performance) {
+          console.info("window.performance work's fine on this browser");
+        }
+        if (performance.navigation.type == 1) {
+          console.info("This page is reloaded");
+        } else {
+          console.info("This page is not reloaded");
+        }
+        console.log(res);
+
+        document.getElementById("name").innerHTML = `${res.username}`;
+        document.getElementById("email").innerHTML = `${res.email}`;
+        document.getElementById("mobile-no").innerHTML = `${res.mobile}`;
+        // document.getElementById(
+        //   "address"
+        // ).innerHTML = `${res2.details[0].address}`;
+
+        //  document.getElementById('name').innerHTML = `${res.username}`;
+        //  document.getElementById('email').innerHTML = `${res.email}`;
+        //  document.getElementById('mobile-no').innerHTML = `${res.mobile}`;
+        //  document.getElementById('address').innerHTML = `${res.email}`;
+      };
+
+      const orderDetailsAndPending = async () => {
+        let cookies = document.cookie;
+        console.log(cookies);
+
+        const params = {
+          token: cookies,
+        };
+        console.log(params);
+        var queryString = Object.keys(params)
+          .map((key) => key + "=" + params[key])
+          .join("&");
+
+        let response = await fetch(
+          "https://calm-garden-13016.herokuapp.com/user_data",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }, // this line is important, if this content-type is not set it wont work
+            body: queryString,
+          }
+        );
+
+        let res = await response.json();
+
+        const params2 = { name: res.username, email: res.email };
+
+
+        var queryString2 = Object.keys(params2)
+          .map((key) => key + "=" + params2[key])
+          .join("&");
+
+        let response2 = await fetch(
+          "https://calm-garden-13016.herokuapp.com/user_profile",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }, // this line is important, if this content-type is not set it wont work
+            body: queryString2,
+          }
+        );
+
+        let res2 = await response2.json();
+        console.log(res2.details);
+        let parentDiv = document.getElementById("purchase-history-successful");
+        for (const detail of res2.details) {
+          console.log(detail);
+          let date = new Date(detail.createdAt);
+          //date = date.toISOString().substring(0, 19);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <tr>
+            <td>${detail._id}</td>
+            <td>${date}</td>
+            <td> Successful </td>
+            <td>${detail.details.length}</td>
+            <td>${detail.totalPrice}</td>
+          </tr>
+          `;
+          parentDiv.appendChild(tr);
+
+          console.log(params2);
+
+        response2 = await fetch("https://calm-garden-13016.herokuapp.com/user_pending", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" }, // this line is important, if this content-type is not set it wont work
+            body: queryString2,
+          });
+        }
+
+        console.log(response2);
+        
+          
+        res2 = await response2.json();
+        console.log(res2);
+       if(res2.details.length > 0){
+        console.log(res2.details);
+        parentDiv = document.getElementById("purchase-history-pending");
+
+
+        //last order
+        const parentDiv2 = document.getElementById('last-order');
+        let det = [];
+        det = res2.details[0].details;
+        let id = res2.details[0]._id;
+
+        let totalPriceOfLastOrder = res2.details[0].totalPrice;
+        
+        console.log(id);
+        document.getElementById('last-order-id').innerText = id;
+        
+        document.getElementById('totalPriceOfLastOrder').innerText = totalPriceOfLastOrder;
+        for( const food of det){
+          console.log( food);
+          // let a = food.imgSource.slice(0,3);
+          // console.log(a);
+          // let b = food.imgSource.slice(4,);
+          // let img = a + "/" + b;
+          // console.log(img);
+          // let date = new Date(food.createdAt);
+          // date = date.toISOString().substring(0, 19);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <tr>
+          
+            <td><img style="width:100px; height: 100px" src="${food.imgSource}"></img></td>
+            <td> ${food.name} </td>
+            <td>${food.quantity}</td>
+            <td>${food.price}</td>
+          </tr>
+          `;
+          parentDiv2.appendChild(tr);
+        }
+
+        // pending order
+        for (const detail of res2.details) {
+          console.log(detail);
+          let date = new Date(detail.createdAt);
+          //date = date.toISOString().substring(0, 19);
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <tr>
+            <td>${detail._id}</td>
+            <td>${date}</td>
+            <td> Pending </td>
+            <td>${detail.details.length}</td>
+            <td>${detail.totalPrice}</td>
+          </tr>
+          `;
+          parentDiv.appendChild(tr);
+        }
+
+        document.getElementById("name").innerHTML = `${res.username}`;
+        document.getElementById("email").innerHTML = `${res.email}`;
+        document.getElementById("mobile-no").innerHTML = `${res.mobile}`;
+        document.getElementById(
+          "address"
+        ).innerHTML = `${res2.details[0].address}`;
+       }
+      };
+
+      const changePassword = () =>{
+        window.location.href = "passwordChange.html";
+      }
+
+      loadProfileData();
+      orderDetailsAndPending();
+    </script>
+  </body>
+</html>
